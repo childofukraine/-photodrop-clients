@@ -34,7 +34,6 @@ exports.AuthController = AuthController;
 _a = AuthController;
 AuthController.sendOtp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { countryCode, phoneNumber } = req.body;
-    console.log(countryCode);
     try {
         yield client.verify.v2
             .services(serviceSid)

@@ -25,7 +25,7 @@ export class AuthController {
     next
   ) => {
     const { countryCode, phoneNumber } = req.body;
-    console.log(countryCode);
+  
     try {
       await client.verify.v2
         .services(serviceSid)

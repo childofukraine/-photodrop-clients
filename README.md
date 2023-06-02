@@ -22,3 +22,13 @@
 ```
 - After login you will gain access token, user information in response.body and refresh token in cookies. You should store access token in client side app in headers["authorization"].
 #
+### [POST] /upload-selfie
+#### body: multipart-form
+```json
+{
+  "files": "file.jpg", // required at least 1 file
+}
+```
+#### headers: ["authorization"]: access_token
+- uploads selfie to s3 + adds records in tables and return user info with selfie
+#

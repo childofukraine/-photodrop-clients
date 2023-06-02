@@ -1,6 +1,10 @@
 import Router from "express";
 import { AuthController } from "../controllers/authController";
+import UserController from "../controllers/userController";
+import { upload } from "../libs/multer";
+import isAuthorized from "../middlewares/isAuthorized";
 import AuthValidator from "../validators/authValidator";
+import UserValidator from "../validators/userValidator";
 
 export const router = Router();
 
@@ -17,3 +21,12 @@ router.post(
 );
 
 router.post("/refresh", AuthValidator.checkCookies, AuthController.refresh);
+
+
+router.post(
+  "/upload-selfie",
+  isAuthorized,
+  upload.single("files"),
+  UserValidator.checkUploadSelfieBody,
+  UserController.uploadSelfie,
+);

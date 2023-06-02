@@ -9,7 +9,25 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  methods: ["HEAD", "OPTIONS", "POST", "GET", "PUT", "PATCH", "DELETE"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Uppy-Versions",
+    "Accept",
+    "x-requested-with",
+    "Access-Control-Allow-Origin",
+  ],
+  exposedHeaders: [
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Origin",
+  ],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  credentials: true,
+},
+));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
