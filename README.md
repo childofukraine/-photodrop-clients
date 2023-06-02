@@ -1,7 +1,7 @@
 # -photodrop-clients
 ## API endpoints:
 #
-### [POST] auth/sign-in/send-otp - using for sign-in users
+### [POST] sign-in/send-otp - using for sign-in users
 ### body: JSON
 ```json
 {
@@ -11,7 +11,7 @@
 ```
 - After making request you will gain one time password (OTP) via phone number (you should use it for verification endpoint).
 #
-### [POST] /auth/sign-in/verify-otp
+### [POST] sign-in/verify-otp
 #### body: JSON
 ```json
 {
