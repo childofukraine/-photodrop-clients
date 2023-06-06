@@ -17,7 +17,6 @@ const uuid_1 = require("uuid");
 const boom_1 = require("@hapi/boom");
 const selfie_1 = __importDefault(require("../entities/selfie"));
 const convertToPng_1 = require("../libs/convertToPng");
-const getClientIdFromToken_1 = require("../libs/getClientIdFromToken");
 const s3_1 = require("../libs/s3");
 const thumbnails_1 = require("../libs/thumbnails");
 const selfie_2 = __importDefault(require("../repositories/selfie"));
@@ -27,14 +26,17 @@ class UserController {
 exports.default = UserController;
 _a = UserController;
 UserController.uploadSelfie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c, _d;
-    const clientId = (0, getClientIdFromToken_1.getClientIdFromToken)((_b = req.header("Authorization")) === null || _b === void 0 ? void 0 : _b.replace("Bearer ", ""));
+    var _b, _c;
+    // const clientId = getClientIdFromToken(
+    //   req.header("Authorization")?.replace("Bearer ", "")!
+    // );
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
     const selfie = req.file;
     const { shiftX, shiftY, zoom, width, height } = req.body;
     try {
         let file = selfie.buffer;
-        let extName = (_c = selfie.originalname.split(".").pop()) === null || _c === void 0 ? void 0 : _c.toLowerCase();
-        if (((_d = selfie.originalname.split(".").pop()) === null || _d === void 0 ? void 0 : _d.toLowerCase()) === "heic") {
+        let extName = (_b = selfie.originalname.split(".").pop()) === null || _b === void 0 ? void 0 : _b.toLowerCase();
+        if (((_c = selfie.originalname.split(".").pop()) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === "heic") {
             file = yield (0, convertToPng_1.convertToPng)(file);
             extName = "png";
         }

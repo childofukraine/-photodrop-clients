@@ -25,7 +25,7 @@ router.post("/refresh", AuthValidator.checkCookies, AuthController.refresh);
 
 router.post(
   "/upload-selfie",
-  isAuthorized,
+  // isAuthorized,
   upload.single("files"),
   UserValidator.checkUploadSelfieBody,
   UserController.uploadSelfie,
