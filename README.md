@@ -32,3 +32,13 @@
 #### headers: ["authorization"]: access_token
 - uploads selfie to s3 + adds records in tables and return user info with selfie
 #
+### [GET] /get-all
+#### body: none
+#### headers: ["authorization"]: access_token
+- returns to user information of all of his albums + photos
+#
+### [GET] /album/${albumId}
+#### body: none
+#### headers: ["authorization"]: access_token
+- returns to user information of one album by album id
+#

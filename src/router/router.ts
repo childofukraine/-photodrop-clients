@@ -1,5 +1,6 @@
 import Router from "express";
 import { AuthController } from "../controllers/authController";
+import { DashboardController } from "../controllers/dashboardController";
 import UserController from "../controllers/userController";
 import { upload } from "../libs/multer";
 import isAuthorized from "../middlewares/isAuthorized";
@@ -22,11 +23,21 @@ router.post(
 
 router.post("/refresh", AuthValidator.checkCookies, AuthController.refresh);
 
-
 router.post(
   "/upload-selfie",
   // isAuthorized,
   upload.single("files"),
   UserValidator.checkUploadSelfieBody,
-  UserController.uploadSelfie,
+  UserController.uploadSelfie
+);
+
+router.get(
+  "/get-all",
+  // isAuthorized,
+  DashboardController.getAllAlbums
+);
+router.get(
+  "/album/:albumId",
+  // isAuthorized,
+  DashboardController.getAlbumById
 );
