@@ -42,3 +42,13 @@
 #### headers: ["authorization"]: access_token
 - returns to user information of one album by album id
 #
+### [PUT] /name
+#### body: JSON
+```json
+{
+	"fullName": "Bob Tommy", 
+}
+```
+#### headers: ["authorization"]: access_token
+- updates user full name and return updated user info with selfie
+#
