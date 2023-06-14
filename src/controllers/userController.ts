@@ -9,7 +9,7 @@ import { uploadFileToS3 } from "../libs/s3";
 import { thumbnail } from "../libs/thumbnails";
 import SelfieRepository from "../repositories/selfie";
 import { UserRepository } from "../repositories/user";
-import { TypedResponse, UploadSelfieRequest, File } from "../types";
+import { TypedResponse, UploadSelfieRequest, File, UpdateUserNameRequest } from "../types";
 
 export default class UserController {
   static uploadSelfie: RequestHandler = async (
@@ -20,7 +20,7 @@ export default class UserController {
     // const clientId = getClientIdFromToken(
     //   req.header("Authorization")?.replace("Bearer ", "")!
     // );
-    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57"
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
     const selfie = req.file as File;
     const { shiftX, shiftY, zoom, width, height } = req.body;
 
@@ -61,31 +61,32 @@ export default class UserController {
     }
   };
 
-  // static updateUserName: RequestHandler = async (
-  //   req: UpdateUserNameRequest,
-  //   res: TypedResponse<{ user: PDCClient; selfie: PDCSelfie | null }>,
-  //   next,
-  // ) => {
-  //   const clientId = getClientIdFromToken(
-  //     req.header("Authorization")?.replace("Bearer ", "")!,
-  //   );
-  //   const { fullName } = req.body;
+  static updateUserName: RequestHandler = async (
+    req: UpdateUserNameRequest,
+    res: TypedResponse<{ user: PDCClient; selfie: PDCSelfie | null }>,
+    next,
+  ) => {
+    // const clientId = getClientIdFromToken(
+    //   req.header("Authorization")?.replace("Bearer ", "")!,
+    // );
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
+    const { fullName } = req.body;
 
-  //   try {
-  //     await UserRepository.updateUserName(fullName, clientId);
+    try {
+      await UserRepository.updateUserName(fullName, clientId);
 
-  //     const updatedUser = await UserRepository.getUserById(clientId);
+      const updatedUser = await UserRepository.getUserById(clientId);
 
-  //     if (!updatedUser) throw Boom.notFound();
+      if (!updatedUser) throw notFound();
 
-  //     res.status(200).json({
-  //       user: updatedUser[0].pdc_client,
-  //       selfie: updatedUser[0].pdc_selfies,
-  //     });
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // };
+      res.status(200).json({
+        user: updatedUser[0].pdc_client,
+        selfie: updatedUser[0].pdc_selfies,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
 
   // static updateUserEmail: RequestHandler = async (
   //   req: UpdateUserEmailRequest,

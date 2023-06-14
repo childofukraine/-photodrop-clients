@@ -41,3 +41,10 @@ router.get(
   // isAuthorized,
   DashboardController.getAlbumById
 );
+
+router.put(
+  "/name",
+  // isAuthorized,
+  UserValidator.checkUpdateFullNameBody,
+  UserController.updateUserName
+);

@@ -56,3 +56,23 @@ UserController.uploadSelfie = (req, res, next) => __awaiter(void 0, void 0, void
         next(e);
     }
 });
+UserController.updateUserName = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // const clientId = getClientIdFromToken(
+    //   req.header("Authorization")?.replace("Bearer ", "")!,
+    // );
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
+    const { fullName } = req.body;
+    try {
+        yield user_1.UserRepository.updateUserName(fullName, clientId);
+        const updatedUser = yield user_1.UserRepository.getUserById(clientId);
+        if (!updatedUser)
+            throw (0, boom_1.notFound)();
+        res.status(200).json({
+            user: updatedUser[0].pdc_client,
+            selfie: updatedUser[0].pdc_selfies,
+        });
+    }
+    catch (e) {
+        next(e);
+    }
+});

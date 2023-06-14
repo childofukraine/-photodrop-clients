@@ -43,8 +43,10 @@ DashboardController.getAllAlbums = (req, res, next) => __awaiter(void 0, void 0,
             })));
         }
         const albumsWithPhotos = yield album_1.default.getAllAlbumsWithPhotosByUserIdAndPhone(clientId, phone);
-        if (!albumsWithPhotos)
-            throw (0, boom_1.notFound)();
+        const noAlbumsResult = [];
+        if (!albumsWithPhotos) {
+            res.status(200).json(noAlbumsResult);
+        }
         res.status(200).json(albumsWithPhotos);
     }
     catch (e) {

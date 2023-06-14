@@ -24,3 +24,6 @@ dashboardController_1.DashboardController.getAllAlbums);
 exports.router.get("/album/:albumId", 
 // isAuthorized,
 dashboardController_1.DashboardController.getAlbumById);
+exports.router.put("/name", 
+// isAuthorized,
+userValidator_1.default.checkUpdateFullNameBody, userController_1.default.updateUserName);
