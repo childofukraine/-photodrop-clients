@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const drizzle_orm_1 = require("drizzle-orm");
+const moment_1 = __importDefault(require("moment"));
 const database_1 = __importDefault(require("../db/database"));
 const schema_1 = require("../db/schema");
 const album_1 = require("../entities/album");
@@ -132,7 +133,8 @@ class AlbumRepository {
             else {
                 sortedPhotosByAlbumId.forEach((p) => preparedPhotos.push(new photo_1.Photo(p.photoId, p.lockedPhotoUrl, p.lockedThumbnailUrl, p.createdAt, p.albumId)));
             }
-            const preparedAlbum = new album_1.Album(albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.albumId, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.name, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.location, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.createdAt, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.isUnlocked, cover, preparedPhotos);
+            const albumCreatedAtMoment = (0, moment_1.default)(albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.createdAt).format("MMM D, YYYY");
+            const preparedAlbum = new album_1.Album(albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.albumId, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.name, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.location, albumCreatedAtMoment, albumInfo === null || albumInfo === void 0 ? void 0 : albumInfo.isUnlocked, cover, preparedPhotos);
             return preparedAlbum;
         });
     }

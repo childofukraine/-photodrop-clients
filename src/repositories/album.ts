@@ -1,4 +1,5 @@
 import { and, eq, like } from "drizzle-orm";
+import moment from "moment";
 import database from "../db/database";
 import {
   albumsTable,
@@ -241,16 +242,17 @@ export default class AlbumRepository {
         )
       );
     }
+    const albumCreatedAtMoment = moment(albumInfo?.createdAt!).format("MMM D, YYYY") as unknown as Date
     const preparedAlbum = new Album(
       albumInfo?.albumId!,
       albumInfo?.name!,
       albumInfo?.location!,
-      albumInfo?.createdAt!,
+      albumCreatedAtMoment,
       albumInfo?.isUnlocked!,
       cover,
       preparedPhotos
     );
-
+   
     return preparedAlbum;
   }
 }
