@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Send } from "express-serve-static-core";
-import { PDCClient,PDCSelfie } from "./db/schema";
+import { PDCClient, PDCSelfie } from "./db/schema";
 
 export interface SendOtpRequest extends Request {
   body: {

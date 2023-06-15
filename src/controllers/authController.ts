@@ -1,9 +1,14 @@
 import { RequestHandler } from "express";
 import { Twilio } from "twilio";
-import Boom from "@hapi/boom";
+import Boom, { notFound } from "@hapi/boom";
 import { v4 as uuid } from "uuid";
 import dotenv from "dotenv";
-import { RefreshTokensRequest, SendOtpRequest, TypedResponse, VerifyOtpRequest } from "../types";
+import {
+  RefreshTokensRequest,
+  SendOtpRequest,
+  TypedResponse,
+  VerifyOtpRequest,
+} from "../types";
 import { SessionRepository } from "../repositories/session";
 import Session from "../entities/session";
 import { createTokens } from "../libs/jwtGenerator";
@@ -25,7 +30,7 @@ export class AuthController {
     next
   ) => {
     const { countryCode, phoneNumber } = req.body;
-  
+
     try {
       await client.verify.v2
         .services(serviceSid)
@@ -72,9 +77,7 @@ export class AuthController {
       if (user) {
         const tokens = createTokens(user[0].pdc_client.clientId);
         const refreshTokenExpTime = Math.floor(Date.now() + 432000000);
-        const sessionExpireTimestamp = new Date(
-          refreshTokenExpTime
-        )
+        const sessionExpireTimestamp = new Date(refreshTokenExpTime);
         const newSession = new Session(
           uuid(),
           user[0].pdc_client.clientId,
@@ -101,9 +104,7 @@ export class AuthController {
 
         const tokens = createTokens(newUser.clientId);
         const refreshTokenExpTime = Math.floor(Date.now() + 432000000);
-        const sessionExpireTimestamp = new Date(
-          refreshTokenExpTime
-        )
+        const sessionExpireTimestamp = new Date(refreshTokenExpTime);
 
         const newSession = new Session(
           uuid(),
@@ -129,18 +130,17 @@ export class AuthController {
     }
   };
 
-
   static refresh: RequestHandler = async (
     req: RefreshTokensRequest,
     res: TypedResponse<{ accessToken: string }>,
-    next,
+    next
   ) => {
     const { refreshToken } = req.cookies;
     const timeStamp = new Date(Date.now()).toJSON();
 
     try {
       const session = await SessionRepository.getSessionByRefreshToken(
-        refreshToken,
+        refreshToken
       );
 
       if (!session) throw Boom.badRequest("Invalid refresh token.");
@@ -155,19 +155,17 @@ export class AuthController {
 
       const newTokens = createTokens(session[0].clientId);
       const refreshTokenExpTime = Math.floor(Date.now() + 432000000);
-      const sessionExpireTimestamp = new Date(
-        refreshTokenExpTime,
-      )
+      const sessionExpireTimestamp = new Date(refreshTokenExpTime);
       const newSession = new Session(
         session[0].sessionId,
         session[0].clientId,
         newTokens.refreshToken,
-        sessionExpireTimestamp as unknown as Date,
+        sessionExpireTimestamp as unknown as Date
       );
 
       await SessionRepository.updateSessionById(
         newSession,
-        newSession.sessionId,
+        newSession.sessionId
       );
 
       res
@@ -176,6 +174,34 @@ export class AuthController {
           sameSite: "strict",
         })
         .json({ accessToken: newTokens.accessToken });
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  static me: RequestHandler = async (
+    _req,
+    res: TypedResponse<{
+      user: User;
+      selfie?: PDCSelfie | null;
+    }>,
+    next
+  ) => {
+    // const clientId = getClientIdFromToken(
+    //   req.header("Authorization")?.replace("Bearer ", "")!,
+    // );
+
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
+
+    try {
+      const user = await UserRepository.getUserById(clientId);
+
+      if (!user) throw notFound();
+
+      res.json({
+        user: user[0].pdc_client,
+        selfie: user[0].pdc_selfies,
+      });
     } catch (e) {
       next(e);
     }

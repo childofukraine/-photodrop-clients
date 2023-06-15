@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -15,7 +38,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const twilio_1 = require("twilio");
-const boom_1 = __importDefault(require("@hapi/boom"));
+const boom_1 = __importStar(require("@hapi/boom"));
 const uuid_1 = require("uuid");
 const dotenv_1 = __importDefault(require("dotenv"));
 const session_1 = require("../repositories/session");
@@ -129,6 +152,24 @@ AuthController.refresh = (req, res, next) => __awaiter(void 0, void 0, void 0, f
             sameSite: "strict",
         })
             .json({ accessToken: newTokens.accessToken });
+    }
+    catch (e) {
+        next(e);
+    }
+});
+AuthController.me = (_req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // const clientId = getClientIdFromToken(
+    //   req.header("Authorization")?.replace("Bearer ", "")!,
+    // );
+    const clientId = "7e264b8e-5cc9-4ebe-b864-a4e848f6ed57";
+    try {
+        const user = yield user_1.UserRepository.getUserById(clientId);
+        if (!user)
+            throw (0, boom_1.notFound)();
+        res.json({
+            user: user[0].pdc_client,
+            selfie: user[0].pdc_selfies,
+        });
     }
     catch (e) {
         next(e);

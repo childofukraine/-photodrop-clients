@@ -15,6 +15,9 @@ exports.router = (0, express_1.default)();
 exports.router.post("/sign-in/send-otp", authValidator_1.default.checkSendOtpBody, authController_1.AuthController.sendOtp);
 exports.router.post("/sign-in/verify-otp", authValidator_1.default.checkVerifyOtpBody, authController_1.AuthController.verifyOtp);
 exports.router.post("/refresh", authValidator_1.default.checkCookies, authController_1.AuthController.refresh);
+exports.router.get("/me", 
+//  isAuthorized,
+authController_1.AuthController.me);
 exports.router.post("/upload-selfie", 
 // isAuthorized,
 multer_1.upload.single("files"), userValidator_1.default.checkUploadSelfieBody, userController_1.default.uploadSelfie);

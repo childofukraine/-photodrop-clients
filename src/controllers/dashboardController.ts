@@ -9,7 +9,7 @@ import { TypedResponse } from "../types";
 export class DashboardController {
   static getAllAlbums: RequestHandler = async (
     req,
-    res: TypedResponse<Album[]| null>,
+    res: TypedResponse<Album[] | null>,
     next
   ) => {
     // const clientId = getClientIdFromToken(
@@ -46,7 +46,7 @@ export class DashboardController {
           phone
         );
 
-      const noAlbumsResult: any[] = []
+      const noAlbumsResult: any[] = [];
       if (!albumsWithPhotos) {
         res.status(200).json(noAlbumsResult);
       }

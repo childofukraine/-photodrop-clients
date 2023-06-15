@@ -23,6 +23,12 @@ router.post(
 
 router.post("/refresh", AuthValidator.checkCookies, AuthController.refresh);
 
+router.get(
+  "/me",
+  //  isAuthorized,
+  AuthController.me
+);
+
 router.post(
   "/upload-selfie",
   // isAuthorized,

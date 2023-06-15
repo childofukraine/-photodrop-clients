@@ -52,3 +52,8 @@
 #### headers: ["authorization"]: access_token
 - updates user full name and return updated user info with selfie
 #
+### [GET] /me
+#### body: none
+#### headers: ["authorization"]: access_token
+- you will gain user information in response.body
+#
