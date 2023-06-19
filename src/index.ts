@@ -10,6 +10,10 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
+  origin: [
+    "https://photodropclient.vercel.app",
+    "http://localhost:3000",
+  ],
   methods: ["HEAD", "OPTIONS", "POST", "GET", "PUT", "PATCH", "DELETE"],
   allowedHeaders: [
     "Content-Type",

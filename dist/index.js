@@ -12,6 +12,10 @@ const errorHandler_1 = require("./utils/errorHandler");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
+    origin: [
+        "https://photodropclient.vercel.app",
+        "http://localhost:3000",
+    ],
     methods: ["HEAD", "OPTIONS", "POST", "GET", "PUT", "PATCH", "DELETE"],
     allowedHeaders: [
         "Content-Type",
