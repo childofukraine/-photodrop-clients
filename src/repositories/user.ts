@@ -37,6 +37,9 @@ export class UserRepository {
       )
       .where(eq(clientTable.clientId, id));
     if (!user.length) return null;
+    if (!user[0].pdc_client.fullName) {
+      user[0].pdc_client.fullName = ''
+    }
     return user;
   }
 
