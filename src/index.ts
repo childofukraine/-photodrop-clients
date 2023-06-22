@@ -9,29 +9,15 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "https://photodropclient.vercel.app",
-    "http://localhost:3000",
-  ],
-  methods: ["HEAD", "OPTIONS", "POST", "GET", "PUT", "PATCH", "DELETE"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "Uppy-Versions",
-    "Accept",
-    "x-requested-with",
-    "Access-Control-Allow-Origin",
-  ],
-  exposedHeaders: [
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Origin",
-  ],
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-  credentials: true,
-},
-));
+app.use(
+  cors({
+      origin: '*',
+      methods: ['OPTIONS', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'x-requested-with', 'Access-Control-Allow-Origin'],
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+  }),
+);
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
