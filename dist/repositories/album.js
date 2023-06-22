@@ -138,5 +138,13 @@ class AlbumRepository {
             return preparedAlbum;
         });
     }
+    static updateAlbumStateByAlbumIdAndUserId(albumId, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield db
+                .update(schema_1.clientAlbumsTable)
+                .set({ isUnlocked: true })
+                .where((0, drizzle_orm_1.and)((0, drizzle_orm_1.eq)(schema_1.clientAlbumsTable.clientId, userId), (0, drizzle_orm_1.eq)(schema_1.clientAlbumsTable.albumId, albumId)));
+        });
+    }
 }
 exports.default = AlbumRepository;

@@ -1,6 +1,7 @@
 import Router from "express";
 import { AuthController } from "../controllers/authController";
 import { DashboardController } from "../controllers/dashboardController";
+import PayController from "../controllers/payController";
 import UserController from "../controllers/userController";
 import { upload } from "../libs/multer";
 import isAuthorized from "../middlewares/isAuthorized";
@@ -53,4 +54,14 @@ router.put(
   // isAuthorized,
   UserValidator.checkUpdateFullNameBody,
   UserController.updateUserName
+);
+
+router.post(
+  "/album/create-payment/:albumId",
+  // isAuthorized,
+  PayController.createPaymentForAlbum
+);
+router.get(
+  "/album/confirm-payment/:albumId/:clientId",
+  PayController.confirmPaymentForAlbum
 );

@@ -7,6 +7,7 @@ exports.router = void 0;
 const express_1 = __importDefault(require("express"));
 const authController_1 = require("../controllers/authController");
 const dashboardController_1 = require("../controllers/dashboardController");
+const payController_1 = __importDefault(require("../controllers/payController"));
 const userController_1 = __importDefault(require("../controllers/userController"));
 const multer_1 = require("../libs/multer");
 const authValidator_1 = __importDefault(require("../validators/authValidator"));
@@ -30,3 +31,7 @@ dashboardController_1.DashboardController.getAlbumById);
 exports.router.put("/name", 
 // isAuthorized,
 userValidator_1.default.checkUpdateFullNameBody, userController_1.default.updateUserName);
+exports.router.post("/album/create-payment/:albumId", 
+// isAuthorized,
+payController_1.default.createPaymentForAlbum);
+exports.router.get("/album/confirm-payment/:albumId/:clientId", payController_1.default.confirmPaymentForAlbum);

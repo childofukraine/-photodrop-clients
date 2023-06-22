@@ -242,7 +242,9 @@ export default class AlbumRepository {
         )
       );
     }
-    const albumCreatedAtMoment = moment(albumInfo?.createdAt!).format("MMM D, YYYY") as unknown as Date
+    const albumCreatedAtMoment = moment(albumInfo?.createdAt!).format(
+      "MMM D, YYYY"
+    ) as unknown as Date;
     const preparedAlbum = new Album(
       albumInfo?.albumId!,
       albumInfo?.name!,
@@ -252,7 +254,22 @@ export default class AlbumRepository {
       cover,
       preparedPhotos
     );
-   
+
     return preparedAlbum;
+  }
+
+  static async updateAlbumStateByAlbumIdAndUserId(
+    albumId: string,
+    userId: string
+  ): Promise<void> {
+    await db
+      .update(clientAlbumsTable)
+      .set({ isUnlocked: true })
+      .where(
+        and(
+          eq(clientAlbumsTable.clientId, userId),
+          eq(clientAlbumsTable.albumId, albumId)
+        )
+      );
   }
 }
