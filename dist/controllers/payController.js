@@ -47,7 +47,7 @@ PayController.createPaymentForAlbum = (req, res, next) => __awaiter(void 0, void
             after_completion: {
                 type: "redirect",
                 redirect: {
-                    url: `${REDIRECT_URL}/pay/album/confirm-payment/${albumId}/${clientId}`,
+                    url: `${REDIRECT_URL}/album/confirm-payment/${albumId}/${clientId}`,
                 },
             },
         });

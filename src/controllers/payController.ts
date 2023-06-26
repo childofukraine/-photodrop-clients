@@ -48,7 +48,7 @@ export default class PayController {
         after_completion: {
           type: "redirect",
           redirect: {
-            url: `${REDIRECT_URL}/pay/album/confirm-payment/${albumId}/${clientId}`,
+            url: `${REDIRECT_URL}/album/confirm-payment/${albumId}/${clientId}`,
           },
         },
       });
