@@ -61,7 +61,7 @@ PayController.confirmPaymentForAlbum = (req, res, next) => __awaiter(void 0, voi
     const { albumId, clientId } = req.params;
     try {
         yield album_1.default.updateAlbumStateByAlbumIdAndUserId(albumId, clientId);
-        res.status(303).redirect(`${REDIRECT_FE_URL}${albumId}`);
+        res.status(303).redirect(`${REDIRECT_FE_URL}`);
     }
     catch (e) {
         next(e);

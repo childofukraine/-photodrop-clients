@@ -67,7 +67,7 @@ export default class PayController {
         clientId
       );
 
-      res.status(303).redirect(`${REDIRECT_FE_URL}${albumId}`);
+      res.status(303).redirect(`${REDIRECT_FE_URL}`);
     } catch (e) {
       next(e);
     }
